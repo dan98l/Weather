@@ -23,7 +23,7 @@ class DetailWeatherCityViewController:  UIViewController {
     
     var latitude: Double!
     var longitude: Double!
-
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
         setHeaderCell()
@@ -58,7 +58,6 @@ class DetailWeatherCityViewController:  UIViewController {
             week.append(weather.dt_txt)
             temp.append(Int(weather.main.temp!) - 273)
         }
-        
 
         var tempArrayRemp: [Int] = []
         
@@ -87,6 +86,7 @@ class DetailWeatherCityViewController:  UIViewController {
         formatterDate.dateFormat = "yyyy-MM-dd HH:mm:ss"
         return formatterDate.date(from: str)
     }
+   
 }
 // MARK: - Extension UITableView
 extension DetailWeatherCityViewController: UITableViewDelegate, UITableViewDataSource {

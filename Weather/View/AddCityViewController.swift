@@ -13,12 +13,6 @@ final class AddCityViewController: UIViewController {
     // MARK: - IBOutlets
     @IBOutlet weak var infoAboutCity: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
-    @IBAction func backPresser(sender: UIButton) {
-        guard let citySearch = city.last else { return }
-        completion?(citySearch)
-        self.coreData.saveMyCity(name: citySearch.city!.name, temp: Int((citySearch.list?.last?.main.temp)!)-273, latitude: (citySearch.city?.coord.lat)!, longitude: (citySearch.city?.coord.lon)!)
-        navigationController?.popViewController(animated: true)
-    }
     
     // MARK: - Properties
     private let weather = FetchWeather()
@@ -30,13 +24,19 @@ final class AddCityViewController: UIViewController {
         super.viewDidLoad()
         searchBar.delegate = self
     }
+    
+    @IBAction func backPresser(sender: UIButton) {
+        guard let citySearch = city.last else { return }
+        completion?(citySearch)
+        self.coreData.saveMyCity(name: citySearch.city!.name, temp: Int((citySearch.list?.last?.main.temp)!)-273, latitude: (citySearch.city?.coord.lat)!, longitude: (citySearch.city?.coord.lon)!)
+        navigationController?.popViewController(animated: true)
+    }
 }
 
-// MARK: - Extension UISearchBarDelegate
 extension AddCityViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         self.weather.fetchWeatherDataName(name: "\(searchText)") { city in
-            guard let citySearch = city.last?.list?.first?.main.temp else {return}
+            guard let citySearch = city.last?.list?.last?.main.temp else {return}
             DispatchQueue.main.async {
                 self.infoAboutCity.text = "\(searchText) \n \(Int(citySearch - 273)) °С"
                 self.city = city

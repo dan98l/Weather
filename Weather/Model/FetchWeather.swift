@@ -13,9 +13,11 @@ class FetchWeather {
     var weatherData = [Weather]()
     
     func fetchWeatherDataName(name: String, completion: @escaping ((_ city: [Weather]) -> ())) {
-        let url = "http://api.openweathermap.org/data/2.5/forecast?q=\(name)&appid=d254d5637cae65353c98ac0aa641e7cd"
+        let url = "http://api.openweathermap.org/data/2.5/forecast?q=\(name)&appid=0e003c04f51355a81ba9205dc640aaa2"
            APIService.getWeatherData(urlString: url) { [weak self] result in
-               DispatchQueue.global(qos: .utility).async {
+               print("url:", url)
+               let queue = DispatchQueue.global(qos: .utility)
+               queue.async {
                    switch result {
                    case .success(let weatherList):
                        self?.weatherData = [weatherList]
@@ -28,8 +30,9 @@ class FetchWeather {
     }
     
     func fetchWeatherDataLocation(latitude: Double, longitude: Double, completion: @escaping ((_ city: [Weather]) -> ())) {
-        APIService.getWeatherData(urlString: "http://api.openweathermap.org/data/2.5/forecast?lat=\(latitude)&lon=\(longitude)&appid=d254d5637cae65353c98ac0aa641e7cd") { [weak self] result in
-            DispatchQueue.global(qos: .utility).async {
+        APIService.getWeatherData(urlString: "http://api.openweathermap.org/data/2.5/forecast?lat=\(latitude)&lon=\(longitude)&appid=0e003c04f51355a81ba9205dc640aaa2") { [weak self] result in
+            let queue = DispatchQueue.global(qos: .utility)
+            queue.async {
                 switch result {
                 case .success(let weatherList):
                     self?.weatherData = [weatherList]

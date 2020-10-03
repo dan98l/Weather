@@ -17,7 +17,6 @@ class DetailTableViewCell: UITableViewCell {
         }
     }
     
-    // MARK: - Properties
     var cityDate = [String]()
     var cityTemp = [Int]()
 
